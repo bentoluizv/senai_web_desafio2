@@ -1,11 +1,9 @@
-import BookingList from "./BookingList";
-import PageTitle from "./ui/PageTitle";
+import { ReactNode } from "react";
 
-export default function Main() {
-  return (
-    <main className="flex-grow mb[-20px]">
-      <PageTitle content={"Reservas: "} />
-      <BookingList />
-    </main>
-  );
+type Props = {
+  children: ReactNode;
+};
+
+export default function Main(props: Props) {
+  return <main className="flex-grow mb[-20px]">{props.children}</main>;
 }
