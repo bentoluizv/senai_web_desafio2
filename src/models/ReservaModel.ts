@@ -1,3 +1,16 @@
+import { z } from "zod";
+
+const ReservaSchema = z.object({
+  placa: z.string(),
+  proprietario: z.string(),
+  apartamento: z.string(),
+  bloco: z.string(),
+  modelo: z.string(),
+  cor: z.string(),
+  vaga: z.string(),
+  uuid: z.string().optional(),
+});
+
 export class Reserva {
   constructor(
     readonly placa: string,
@@ -7,8 +20,25 @@ export class Reserva {
     readonly modelo: string,
     readonly cor: string,
     readonly vaga: string,
-    readonly uuid = crypto.randomUUID()
+    readonly uuid = crypto.randomUUID().toString()
   ) {}
+
+  static fromFormData(data: { [k: string]: FormDataEntryValue }) {
+    const parsedData = ReservaSchema.parse(data);
+
+    const { apartamento, bloco, cor, modelo, placa, proprietario, uuid, vaga } =
+      parsedData;
+    return new Reserva(
+      placa,
+      proprietario,
+      apartamento,
+      bloco,
+      modelo,
+      cor,
+      vaga,
+      uuid
+    );
+  }
 }
 
 export class ReservaModel {
