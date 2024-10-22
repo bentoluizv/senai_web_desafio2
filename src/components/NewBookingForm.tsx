@@ -4,22 +4,26 @@ import LabelInput from "./ui/LabelInput";
 
 type Props = {
   children: ReactNode;
+  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 };
 
-export default function NewBookingForm({ children }: Props) {
+export default function NewBookingForm({ children, onSubmit }: Props) {
   return (
-    <form id="register-form" className="flex flex-col items-center">
+    <form
+      onSubmit={onSubmit}
+      id="register-form"
+      className="flex flex-col items-center">
       <div className="flex flex-col mt-4 gap-4 ">
         <InputGroup>
           <LabelInput
             type={"text"}
-            name={"proprietario-nome"}
+            name={"proprietario"}
             content={"Proprietario"}
             isRequired={true}
           />
           <LabelInput
             type={"text"}
-            name={"proprietario-ap"}
+            name={"apartamento"}
             content={"Apartamento"}
             isRequired={true}
           />
@@ -27,13 +31,13 @@ export default function NewBookingForm({ children }: Props) {
         <InputGroup>
           <LabelInput
             type={"text"}
-            name={"proprietario-bl"}
+            name={"bloco"}
             content={"Bloco"}
             isRequired={true}
           />
           <LabelInput
             type={"text"}
-            name={"veiculo-placa"}
+            name={"placa"}
             content={"Placa"}
             isRequired={true}
           />
@@ -41,7 +45,7 @@ export default function NewBookingForm({ children }: Props) {
         <InputGroup>
           <LabelInput
             type={"text"}
-            name={"veiculo-modelo"}
+            name={"modelo"}
             content={"Modelo"}
             isRequired={true}
           />
@@ -49,6 +53,14 @@ export default function NewBookingForm({ children }: Props) {
             type={"text"}
             name={"vaga"}
             content={"Vaga"}
+            isRequired={true}
+          />
+        </InputGroup>
+        <InputGroup>
+          <LabelInput
+            type={"text"}
+            name={"cor"}
+            content={"Cor"}
             isRequired={true}
           />
         </InputGroup>
