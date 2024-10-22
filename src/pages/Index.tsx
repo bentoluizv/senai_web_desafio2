@@ -36,10 +36,25 @@ export default function Index() {
     setBookingData(data);
   }, []);
 
+  const loadBookings = () => {
+    const data = controllerRef.current.list();
+    setBookingData(data);
+  };
   const onDelete = (uuid: string) => {
     controllerRef.current.delete(uuid);
     const updatedData = controllerRef.current.list();
     setBookingData(updatedData);
+  };
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+    const newReservaData = Object.fromEntries(formData);
+
+    const newReserva = Reserva.fromFormData(newReservaData);
+    controllerRef.current.register(newReserva);
+    loadBookings();
+    closeModal();
   };
 
   return (
@@ -47,7 +62,7 @@ export default function Index() {
       <Container>
         {isModalOpen && (
           <NewBookingModal>
-            <NewBookingForm>
+            <NewBookingForm onSubmit={onSubmit}>
               <SubmitButton />
               <CloseModalBtn closeModal={closeModal} />
             </NewBookingForm>
