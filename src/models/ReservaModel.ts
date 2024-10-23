@@ -1,6 +1,7 @@
+import { FieldValues } from "react-hook-form";
 import { z } from "zod";
 
-const ReservaSchema = z.object({
+export const ReservaSchema = z.object({
   placa: z.string(),
   proprietario: z.string(),
   apartamento: z.string(),
@@ -23,7 +24,7 @@ export class Reserva {
     readonly uuid = crypto.randomUUID().toString()
   ) {}
 
-  static fromFormData(data: { [k: string]: FormDataEntryValue }) {
+  static fromFormData(data: FieldValues) {
     const parsedData = ReservaSchema.parse(data);
 
     const { apartamento, bloco, cor, modelo, placa, proprietario, uuid, vaga } =
@@ -59,7 +60,6 @@ export class ReservaModel {
   }
 
   delete(uuid: string) {
-    console.log(this.reservas);
     this.reservas = this.reservas.filter((reserva) => reserva.uuid !== uuid);
     this.#sendToStorage();
   }
