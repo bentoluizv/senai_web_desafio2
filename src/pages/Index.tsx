@@ -58,6 +58,7 @@ export default function Index() {
       <Container>
         {isModalOpen && (
           <NewBookingModal>
+            <h3 className="font-semibold self-center text-xl mb-8">Cadastro</h3>
             <NewBookingForm onSubmit={onSubmit}>
               <SubmitButton />
               <CloseModalBtn closeModal={closeModal} />
