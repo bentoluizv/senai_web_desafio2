@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { FieldValues } from "react-hook-form";
+import Swal from "sweetalert2";
 import BookingList from "../components/BookingList";
 import Container from "../components/Container";
 import Footer from "../components/Footer";
@@ -42,9 +43,27 @@ export default function Index() {
     setBookingData(data);
   };
   const onDelete = (uuid: string) => {
-    controllerRef.current.delete(uuid);
-    const updatedData = controllerRef.current.list();
-    setBookingData(updatedData);
+    Swal.fire({
+      title: "Tem certeza?",
+      text: "Esta ação é irreversível. Deseja continuar?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sim, excluir!",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        controllerRef.current.delete(uuid);
+        const updatedData = controllerRef.current.list();
+        setBookingData(updatedData);
+        Swal.fire(
+          "Excluído!",
+          "O recurso foi excluído com sucesso.",
+          "success"
+        );
+      }
+    });
   };
   const onSubmit = (formData: FieldValues) => {
     const newReserva = Reserva.fromFormData(formData);
