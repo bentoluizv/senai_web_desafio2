@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { FieldValues } from "react-hook-form";
 import BookingList from "../components/BookingList";
 import Container from "../components/Container";
 import Footer from "../components/Footer";
@@ -45,13 +46,8 @@ export default function Index() {
     const updatedData = controllerRef.current.list();
     setBookingData(updatedData);
   };
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const formData = new FormData(e.currentTarget);
-    const newReservaData = Object.fromEntries(formData);
-
-    const newReserva = Reserva.fromFormData(newReservaData);
+  const onSubmit = (formData: FieldValues) => {
+    const newReserva = Reserva.fromFormData(formData);
     controllerRef.current.register(newReserva);
     loadBookings();
     closeModal();
